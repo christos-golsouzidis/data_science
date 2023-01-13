@@ -30,7 +30,7 @@ time.sleep(10)  # seconds
 
 
 pg = create_engine('postgresql://chr_tweety:56786688@postgres_container:5432/tweety_db', echo=True)
-webhook_url = "https://hooks.slack.com/services/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"
+webhook_url = "https://hooks.slack.com/services/..."
 
 pg.execute('''
     CREATE TABLE IF NOT EXISTS tweets (
