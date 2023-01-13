@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  mongo_cg:
+    image: mongo
+    container_name: mongo_db_container
+    ports:
+      - 27017:27017
+
+  tweets_collector_cg:
+    build: cg_tweets_collector
+    container_name: tweets_collector_container
+    volumes:
+      - ./cg_tweets_collector:/app
+    depends_on:
+      - mongo_cg
+
+  postgresdb:
+    image: postgres
+    ports:
+      - 5555:5432
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=chr_tweety
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=tweety_db
+
+  etl:
+    build: cg_etl
+    container_name: etl_container
+    volumes:
+      - ./cg_etl:/app
+    depends_on:
+      - mongo_cg
+      - postgresdb
+  
